@@ -1,0 +1,403 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  * {
+    @apply border-slate-200;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-primary-500 outline-offset-2;
+  }
+}
+
+@layer components {
+  /* Button variants */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-200 text-slate-900 hover:bg-slate-300 active:bg-slate-400;
+  }
+
+  .btn-outline {
+    @apply border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 active:bg-slate-100;
+  }
+
+  .btn-ghost {
+    @apply text-slate-700 hover:bg-slate-100 active:bg-slate-200;
+  }
+
+  .btn-sm {
+    @apply h-8 px-3 text-xs;
+  }
+
+  .btn-md {
+    @apply h-10 px-4 text-sm;
+  }
+
+  .btn-lg {
+    @apply h-12 px-6 text-base;
+  }
+
+  /* Card components */
+  .card {
+    @apply bg-white rounded-lg border border-slate-200 shadow-sm;
+  }
+
+  .card-header {
+    @apply p-6 pb-3;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  .card-footer {
+    @apply p-6 pt-3;
+  }
+
+  /* Form components */
+  .form-field {
+    @apply space-y-2;
+  }
+
+  .form-label {
+    @apply text-sm font-medium text-slate-700;
+  }
+
+  .form-input {
+    @apply w-full rounded-md border border-slate-300 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .form-error {
+    @apply text-sm text-danger-600;
+  }
+
+  .form-help {
+    @apply text-sm text-slate-500;
+  }
+
+  /* Status indicators */
+  .status-badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .status-draft {
+    @apply bg-slate-100 text-slate-700;
+  }
+
+  .status-pending {
+    @apply bg-warning-100 text-warning-700;
+  }
+
+  .status-approved {
+    @apply bg-success-100 text-success-700;
+  }
+
+  .status-rejected {
+    @apply bg-danger-100 text-danger-700;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply animate-skeleton bg-slate-200 rounded;
+  }
+
+  /* Empty state */
+  .empty-state {
+    @apply flex flex-col items-center justify-center p-12 text-center;
+  }
+
+  .empty-state-icon {
+    @apply w-12 h-12 text-slate-400 mb-4;
+  }
+
+  .empty-state-title {
+    @apply text-lg font-semibold text-slate-900 mb-2;
+  }
+
+  .empty-state-description {
+    @apply text-sm text-slate-500 mb-4 max-w-sm;
+  }
+
+  /* Mobile navigation */
+  .mobile-nav-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 z-40;
+  }
+
+  .mobile-nav-panel {
+    @apply fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out;
+  }
+
+  .mobile-nav-open {
+    @apply translate-x-0;
+  }
+
+  .mobile-nav-closed {
+    @apply -translate-x-full;
+  }
+
+  /* Data visualization */
+  .chart-container {
+    @apply bg-white rounded-lg p-6 border border-slate-200;
+  }
+
+  /* Micro-interactions */
+  .hover-lift {
+    @apply transition-transform duration-200 ease-in-out hover:transform hover:-translate-y-1;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 ease-in-out hover:transform hover:scale-105;
+  }
+
+  /* Focus indicators for accessibility */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Print styles */
+@media print {
+  .print\\:hidden {
+    display: none !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+
+  /* Print-specific layout optimizations */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
+    color: #000 !important;
+    background: white !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 0.75in;
+    size: letter;
+  }
+
+  /* Ensure content doesn't break across pages inappropriately */
+  .print-break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-break-after {
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  /* Headers and important elements */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Tables */
+  table {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Borders and backgrounds for print */
+  .print-border {
+    border: 1px solid #000 !important;
+  }
+
+  .print-border-light {
+    border: 1px solid #666 !important;
+  }
+
+  /* Shadow removal for print */
+  .print-no-shadow {
+    box-shadow: none !important;
+  }
+
+  /* Text size adjustments for print readability */
+  .print-text-lg {
+    font-size: 14pt !important;
+  }
+
+  .print-text-xl {
+    font-size: 16pt !important;
+  }
+
+  .print-text-2xl {
+    font-size: 18pt !important;
+  }
+
+  /* Ensure links are readable in print */
+  a[href]:after {
+    content: none !important;
+  }
+
+  /* Table styling for print */
+  table, th, td {
+    border-collapse: collapse !important;
+  }
+
+  th {
+    background: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Margin adjustments */
+  .print-mx-0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .print-px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Max width for print */
+  .print-max-w-none {
+    max-width: none !important;
+  }
+
+  /* Remove unnecessary spacing in print */
+  .print-space-y-2 > * + * {
+    margin-top: 8pt !important;
+  }
+
+  .print-space-y-4 > * + * {
+    margin-top: 16pt !important;
+  }
+
+  /* Header adjustments for proposals */
+  .proposal-header {
+    border-bottom: 2px solid #1e40af !important;
+    padding-bottom: 16pt !important;
+    margin-bottom: 16pt !important;
+  }
+
+  /* Service table styling */
+  .service-table th {
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
+    font-weight: 600 !important;
+    padding: 8pt !important;
+  }
+
+  .service-table td {
+    padding: 8pt !important;
+    border-top: 1px solid #e2e8f0 !important;
+  }
+
+  .service-table .total-row {
+    background-color: #eff6ff !important;
+    font-weight: 700 !important;
+  }
+
+  /* Logo and branding */
+  .print-logo {
+    max-height: 40pt !important;
+  }
+
+  /* Step indicators - hide for print */
+  .step-indicator {
+    display: none !important;
+  }
+
+  /* Buttons and interactive elements */
+  button, .button {
+    display: none !important;
+  }
+
+  /* Navigation and UI chrome */
+  nav, .navigation, .sidebar, .header-actions {
+    display: none !important;
+  }
+
+  /* Ensure proper page flow */
+  .proposal-section {
+    break-inside: avoid !important;
+    margin-bottom: 16pt !important;
+  }
+
+  /* Terms and conditions readable formatting */
+  .terms-section ul {
+    padding-left: 16pt !important;
+  }
+
+  .terms-section li {
+    margin-bottom: 4pt !important;
+  }
+
+  /* Contact information highlight */
+  .contact-highlight {
+    background-color: #eff6ff !important;
+    border: 1px solid #3b82f6 !important;
+    padding: 12pt !important;
+    border-radius: 4pt !important;
+  }
+
+  /* Page numbers and footers */
+  .print-footer {
+    position: fixed !important;
+    bottom: 0.5in !important;
+    left: 0 !important;
+    right: 0 !important;
+    text-align: center !important;
+    font-size: 10pt !important;
+    color: #666 !important;
+  }
+}
