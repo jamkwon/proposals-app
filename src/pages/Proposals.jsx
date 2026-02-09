@@ -97,10 +97,83 @@ const Proposals = () => {
     setSelectedProposals(newSelected)
   }
 
-  const handleBulkAction = (action) => {
-    console.log('Bulk action:', action, 'for proposals:', Array.from(selectedProposals))
-    // TODO: Implement bulk actions
-    setSelectedProposals(new Set())
+  const handleBulkAction = async (action) => {
+    const selectedIds = Array.from(selectedProposals)
+    console.log('Bulk action:', action, 'for proposals:', selectedIds)
+    
+    setLoading(true)
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      switch (action) {
+        case 'archive':
+          setProposals(prev => prev.map(p => 
+            selectedIds.includes(p.id) 
+              ? { ...p, status: 'archived' }
+              : p
+          ))
+          console.log(`Archived ${selectedIds.length} proposals`)
+          break
+          
+        case 'delete':
+          if (window.confirm(`Are you sure you want to delete ${selectedIds.length} proposals? This cannot be undone.`)) {
+            setProposals(prev => prev.filter(p => !selectedIds.includes(p.id)))
+            console.log(`Deleted ${selectedIds.length} proposals`)
+          }
+          break
+          
+        case 'duplicate':
+          const selectedProposalsData = proposals.filter(p => selectedIds.includes(p.id))
+          const duplicatedProposals = selectedProposalsData.map(p => ({
+            ...p,
+            id: Date.now() + Math.random(), // Generate new ID
+            title: `${p.title} (Copy)`,
+            status: 'draft',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }))
+          setProposals(prev => [...duplicatedProposals, ...prev])
+          console.log(`Duplicated ${selectedIds.length} proposals`)
+          break
+          
+        case 'export':
+          // Simulate export
+          const exportData = proposals.filter(p => selectedIds.includes(p.id))
+          const dataStr = JSON.stringify(exportData, null, 2)
+          const dataBlob = new Blob([dataStr], { type: 'application/json' })
+          const url = URL.createObjectURL(dataBlob)
+          const link = document.createElement('a')
+          link.href = url
+          link.download = `proposals_export_${new Date().toISOString().split('T')[0]}.json`
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          URL.revokeObjectURL(url)
+          console.log(`Exported ${selectedIds.length} proposals`)
+          break
+          
+        case 'send':
+          // Simulate sending proposals
+          setProposals(prev => prev.map(p => 
+            selectedIds.includes(p.id) 
+              ? { ...p, status: 'sent', sent_at: new Date().toISOString() }
+              : p
+          ))
+          console.log(`Sent ${selectedIds.length} proposals`)
+          break
+          
+        default:
+          console.log(`Unknown action: ${action}`)
+      }
+    } catch (error) {
+      console.error('Error performing bulk action:', error)
+      alert('An error occurred while performing the action. Please try again.')
+    } finally {
+      setLoading(false)
+      setSelectedProposals(new Set())
+    }
   }
 
   const handleSort = (key) => {
@@ -316,8 +389,33 @@ const Proposals = () => {
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  onClick={() => handleBulkAction('send')}
+                  className="btn btn-sm btn-primary"
+                  disabled={loading}
+                >
+                  <Send className="h-4 w-4 mr-1" />
+                  Send
+                </button>
+                <button
+                  onClick={() => handleBulkAction('duplicate')}
+                  className="btn btn-sm btn-outline"
+                  disabled={loading}
+                >
+                  <Wand2 className="h-4 w-4 mr-1" />
+                  Duplicate
+                </button>
+                <button
+                  onClick={() => handleBulkAction('export')}
+                  className="btn btn-sm btn-outline"
+                  disabled={loading}
+                >
+                  <Download className="h-4 w-4 mr-1" />
+                  Export
+                </button>
+                <button
                   onClick={() => handleBulkAction('archive')}
                   className="btn btn-sm btn-outline"
+                  disabled={loading}
                 >
                   <Archive className="h-4 w-4 mr-1" />
                   Archive
@@ -325,10 +423,12 @@ const Proposals = () => {
                 <button
                   onClick={() => handleBulkAction('delete')}
                   className="btn btn-sm btn-outline text-red-600 border-red-200 hover:bg-red-50"
+                  disabled={loading}
                 >
                   <Trash2 className="h-4 w-4 mr-1" />
                   Delete
                 </button>
+                <div className="border-l border-slate-300 h-6"></div>
                 <button
                   onClick={() => setSelectedProposals(new Set())}
                   className="btn btn-sm btn-ghost"

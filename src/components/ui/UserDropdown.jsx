@@ -27,10 +27,61 @@ const UserDropdown = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  // Initialize theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'system'
+    setTheme(savedTheme)
+    
+    const applyTheme = (themeName) => {
+      const root = document.documentElement
+      if (themeName === 'dark') {
+        root.classList.add('dark')
+      } else if (themeName === 'light') {
+        root.classList.remove('dark')
+      } else {
+        // System theme
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (systemDark) {
+          root.classList.add('dark')
+        } else {
+          root.classList.remove('dark')
+        }
+      }
+    }
+
+    applyTheme(savedTheme)
+
+    // Listen for system theme changes when using system theme
+    if (savedTheme === 'system') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      const handleChange = () => applyTheme('system')
+      mediaQuery.addEventListener('change', handleChange)
+      return () => mediaQuery.removeEventListener('change', handleChange)
+    }
+  }, [])
+
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme)
-    // TODO: Implement theme switching logic
-    console.log('Theme changed to:', newTheme)
+    
+    // Apply theme to document
+    const root = document.documentElement
+    
+    if (newTheme === 'dark') {
+      root.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+    } else if (newTheme === 'light') {
+      root.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+    } else {
+      // System theme
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (systemDark) {
+        root.classList.add('dark')
+      } else {
+        root.classList.remove('dark')
+      }
+      localStorage.setItem('theme', 'system')
+    }
   }
 
   const menuItems = [
