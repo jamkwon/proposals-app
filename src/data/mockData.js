@@ -78,7 +78,7 @@ export const mockProposals = [
     currency: 'USD',
     created_at: '2024-02-01T10:00:00Z',
     updated_at: '2024-02-05T14:30:00Z',
-    deadline: '2024-02-15T23:59:59Z',
+    deadline: '2026-02-15T23:59:59Z',
     estimated_hours: 120,
     deliverables: [
       'Logo design (3 concepts)',
@@ -108,7 +108,7 @@ export const mockProposals = [
     currency: 'USD',
     created_at: '2024-01-15T09:00:00Z',
     updated_at: '2024-01-25T16:45:00Z',
-    deadline: '2024-03-01T23:59:59Z',
+    deadline: '2026-03-01T23:59:59Z',
     estimated_hours: 300,
     deliverables: [
       'Responsive website design',
@@ -138,7 +138,7 @@ export const mockProposals = [
     currency: 'USD',
     created_at: '2024-02-05T11:30:00Z',
     updated_at: '2024-02-05T11:30:00Z',
-    deadline: '2024-02-20T23:59:59Z',
+    deadline: '2026-02-20T23:59:59Z',
     estimated_hours: 80,
     deliverables: [
       'Market research report',
