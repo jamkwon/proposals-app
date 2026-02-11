@@ -116,15 +116,22 @@ const Sidebar = () => {
 
           {/* Quick Stats */}
           <li>
-            <div className="text-xs font-semibold leading-6 text-slate-400 uppercase tracking-wide">
+            <div className="text-xs font-semibold leading-6 text-slate-400 uppercase tracking-wide mb-3">
               Quick Stats
             </div>
-            <div className="mt-3 space-y-3">
+            <div className="space-y-3">
               {quickStats.map((stat) => (
-                <div key={stat.name} className="flex items-center gap-x-3 text-sm">
-                  <stat.icon className={cn("h-4 w-4", stat.color)} />
-                  <span className="text-slate-700 font-medium">{stat.value}</span>
-                  <span className="text-slate-500">{stat.name}</span>
+                <div key={stat.name} className="flex items-center gap-x-3 text-sm p-2 rounded-lg hover:bg-slate-50 transition-colors group cursor-pointer">
+                  <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center bg-opacity-10 group-hover:bg-opacity-20 transition-colors",
+                    stat.color === 'text-blue-600' ? 'bg-blue-500' : 
+                    stat.color === 'text-green-600' ? 'bg-green-500' : 'bg-amber-500'
+                  )}>
+                    <stat.icon className={cn("h-4 w-4", stat.color)} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-slate-900 font-semibold text-lg">{stat.value}</span>
+                    <p className="text-slate-600 text-xs">{stat.name}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -132,36 +139,72 @@ const Sidebar = () => {
 
           {/* Recent Proposals */}
           <li>
-            <div className="text-xs font-semibold leading-6 text-slate-400 uppercase tracking-wide">
-              Recent
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-xs font-semibold leading-6 text-slate-400 uppercase tracking-wide">
+                Recent
+              </div>
+              <NavLink 
+                to="/proposals"
+                className="text-xs text-primary-600 hover:text-primary-700 font-medium focus-ring rounded"
+              >
+                View all
+              </NavLink>
             </div>
-            <ul role="list" className="mt-3 space-y-2">
-              {recentProposals.map((proposal) => (
+            <ul role="list" className="space-y-2">
+              {recentProposals.map((proposal, index) => (
                 <li key={proposal.id}>
                   <NavLink
                     to={`/proposals/${proposal.id}`}
                     className={cn(
-                      "group flex items-start gap-x-3 rounded-md p-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-slate-900",
-                      "focus-ring transition-colors duration-200"
+                      "group flex items-start gap-x-3 rounded-lg p-3 text-sm hover:bg-slate-50 hover:shadow-sm",
+                      "focus-ring transition-all duration-200 border border-transparent hover:border-slate-200"
                     )}
                   >
-                    <div className="flex-shrink-0 mt-0.5">
+                    <div className="flex-shrink-0 mt-1">
                       <div className={cn(
-                        "h-2 w-2 rounded-full",
+                        "h-2 w-2 rounded-full ring-2 ring-white shadow-sm",
                         proposal.priority === 'urgent' ? 'bg-red-500' :
                         proposal.priority === 'high' ? 'bg-amber-500' :
                         'bg-green-500'
                       )} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium">{proposal.title}</p>
-                      <p className="truncate text-xs text-slate-500">
-                        {proposal.client.name}
+                      <p className="truncate font-medium text-slate-900 group-hover:text-primary-700 transition-colors">
+                        {proposal.title}
                       </p>
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="truncate text-xs text-slate-500">
+                          {proposal.client.name}
+                        </p>
+                        <span className={cn(
+                          'inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium',
+                          proposal.status === 'won' ? 'text-green-700 bg-green-50' :
+                          proposal.status === 'sent' ? 'text-blue-700 bg-blue-50' :
+                          proposal.status === 'pending' ? 'text-amber-700 bg-amber-50' :
+                          'text-slate-700 bg-slate-50'
+                        )}>
+                          {proposal.status.replace('_', ' ')}
+                        </span>
+                      </div>
                     </div>
                   </NavLink>
                 </li>
               ))}
+              
+              {recentProposals.length === 0 && (
+                <li className="text-center py-6">
+                  <div className="text-slate-400 text-sm">
+                    <FileText className="h-8 w-8 mx-auto mb-2 opacity-40" />
+                    <p>No recent proposals</p>
+                    <NavLink 
+                      to="/proposals/new"
+                      className="text-primary-600 hover:text-primary-700 text-xs font-medium mt-1 inline-block focus-ring rounded"
+                    >
+                      Create your first proposal
+                    </NavLink>
+                  </div>
+                </li>
+              )}
             </ul>
           </li>
 

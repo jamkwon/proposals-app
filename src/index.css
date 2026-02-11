@@ -15,9 +15,49 @@
     @apply bg-slate-50 text-slate-900 antialiased;
   }
 
-  /* Focus styles for accessibility */
+  /* Enhanced focus styles for accessibility */
   *:focus-visible {
     @apply outline-2 outline-primary-500 outline-offset-2;
+  }
+
+  /* Improve contrast for better accessibility */
+  .text-slate-500 {
+    @apply text-slate-600;
+  }
+
+  /* Enhanced animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .hover-scale {
+      @apply transition-transform duration-200 ease-out;
+    }
+    .hover-scale:hover {
+      @apply scale-105;
+    }
+    
+    .hover-lift {
+      @apply transition-all duration-200 ease-out;
+    }
+    .hover-lift:hover {
+      @apply -translate-y-0.5 shadow-md;
+    }
+    
+    .pulse-subtle {
+      animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse-subtle {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.8;
+      }
+    }
+  }
+  
+  /* Keyboard shortcut hint */
+  .kbd-hint {
+    @apply inline-flex items-center px-1.5 py-0.5 text-xs font-mono text-slate-500 bg-slate-100 rounded border border-slate-300;
   }
 }
 

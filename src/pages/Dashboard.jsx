@@ -19,7 +19,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { mockProposals, mockAnalytics } from '../data/mockData'
 import { formatCurrency, formatDate, getRelativeTime, getStatusColor } from '../lib/utils'
 import { SkeletonCard, SkeletonChart } from '../components/ui/LoadingStates'
-import { EmptyAnalytics } from '../components/ui/EmptyState'
+import { EmptyAnalytics, EmptyDeadlines } from '../components/ui/EmptyState'
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -147,8 +147,8 @@ const Dashboard = () => {
         </div>
       </motion.div>
 
-      {/* Stats Grid - P3 improvement #11: Visual Hierarchy */}
-      <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Grid - Enhanced Visual Hierarchy and Responsiveness */}
+      <motion.div variants={item} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat) => (
           <motion.div
             key={stat.name}
@@ -337,7 +337,7 @@ const Dashboard = () => {
           <div className="card-content">
             <div className="space-y-4">
               {upcomingDeadlines.length === 0 ? (
-                <EmptyAnalytics />
+                <EmptyDeadlines onCreateProposal={() => window.location.href = '/proposals/new'} />
               ) : (
                 upcomingDeadlines.map((proposal, index) => (
                   <motion.div

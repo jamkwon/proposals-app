@@ -113,6 +113,10 @@ const Header = ({ title, onMobileMenuClick }) => {
                     if (e.key === 'Enter' && searchQuery.trim()) {
                       handleSearch(searchQuery.trim())
                     }
+                    if (e.key === 'Escape') {
+                      setSearchQuery('')
+                      setShowResults(false)
+                    }
                   }}
                 />
                 {/* Search results dropdown */}

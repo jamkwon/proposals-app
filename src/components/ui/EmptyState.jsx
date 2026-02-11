@@ -188,6 +188,51 @@ export const EmptyAnalytics = () => (
   />
 )
 
+export const EmptyDeadlines = ({ onCreateProposal }) => (
+  <EmptyState
+    illustration={
+      <svg className="w-20 h-20 mx-auto text-slate-300" fill="none" viewBox="0 0 200 200">
+        {/* Calendar with clock */}
+        <rect x="50" y="40" width="100" height="120" rx="8" fill="currentColor" opacity="0.1" />
+        <rect x="50" y="40" width="100" height="30" rx="8" rxBottom="0" fill="currentColor" opacity="0.2" />
+        
+        {/* Calendar binding holes */}
+        <circle cx="75" cy="30" r="4" fill="currentColor" opacity="0.4" />
+        <circle cx="100" cy="30" r="4" fill="currentColor" opacity="0.4" />
+        <circle cx="125" cy="30" r="4" fill="currentColor" opacity="0.4" />
+        
+        {/* Clock face */}
+        <circle cx="100" cy="110" r="25" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.6" />
+        <path d="M100 95 L100 110 L110 110" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+        
+        {/* Floating dots indicating activity */}
+        <circle cx="140" cy="80" r="2" fill="#3b82f6" opacity="0.7">
+          <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="160" cy="95" r="2" fill="#10b981" opacity="0.7">
+          <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    }
+    title="All caught up!"
+    description="No upcoming deadlines at the moment. Set deadlines on your proposals to stay organized and never miss important dates."
+    action={
+      <div className="space-y-3">
+        <button
+          onClick={onCreateProposal}
+          className="btn btn-primary btn-sm hover-scale focus-ring"
+        >
+          Create Proposal
+        </button>
+        <p className="text-xs text-slate-400">
+          💡 Pro tip: Set realistic deadlines to improve your win rate
+        </p>
+      </div>
+    }
+    size="compact"
+  />
+)
+
 export const ErrorState = ({ title = "Something went wrong", description, onRetry }) => (
   <EmptyState
     illustration={<ErrorIllustration />}
